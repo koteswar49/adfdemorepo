@@ -1,0 +1,6 @@
+{
+	"name": "on-premise-integratio-server",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

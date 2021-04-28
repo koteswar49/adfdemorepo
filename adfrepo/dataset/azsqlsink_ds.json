@@ -1,0 +1,48 @@
+{
+	"name": "azsqlsink_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Az_ls_sqlsink_Conn",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Countryid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CountryName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "State",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Pincode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TelephoneNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "FileName",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Countydata"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

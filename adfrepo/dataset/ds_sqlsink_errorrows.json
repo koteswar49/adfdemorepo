@@ -1,0 +1,47 @@
+{
+	"name": "ds_sqlsink_errorrows",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Az_ls_sqlsink_Conn",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Countryid",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CountryName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "State",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Pincode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TelephoneNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "FileName",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Countydata_ErrorRecords"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

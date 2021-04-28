@@ -1,0 +1,9 @@
+{
+	"name": "adfdemo-koti",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "23e493e3-6fc0-4ecb-b4cc-585514b76ee2",
+		"tenantId": "31e335ab-436a-4fea-a843-79bb15694a63"
+	}
+}

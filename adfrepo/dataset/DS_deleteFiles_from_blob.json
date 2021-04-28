@@ -1,0 +1,19 @@
+{
+	"name": "DS_deleteFiles_from_blob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_blob_source_files_conn",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "EmpoutFiles",
+				"container": "development"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

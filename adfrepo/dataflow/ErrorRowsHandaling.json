@@ -1,0 +1,45 @@
+{
+	"name": "ErrorRowsHandaling",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_blobsource",
+						"type": "DatasetReference"
+					},
+					"name": "csvfilesource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sqlsink_errorrows",
+						"type": "DatasetReference"
+					},
+					"name": "sinkforErrorrecords"
+				},
+				{
+					"dataset": {
+						"referenceName": "azsqlsink_ds",
+						"type": "DatasetReference"
+					},
+					"name": "sinkforGoodrows"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ConditionalSplit1"
+				},
+				{
+					"name": "AddFilenameColumn"
+				},
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"script": "source(output(\n\t\tCountryID as string,\n\t\tCountryName as string,\n\t\tState as string,\n\t\tPincode as string,\n\t\tAddress as string,\n\t\ttelephone as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> csvfilesource\ncsvfilesource split(isNull(toInteger(CountryID)),\n\tdisjoint: false) ~> ConditionalSplit1@(ErrorRows, GoodRows)\nConditionalSplit1@ErrorRows derive(FileName = 'UK_Data_12062021.txt',\n\t\ttelephone = toInteger(telephone)) ~> AddFilenameColumn\nConditionalSplit1@GoodRows derive(CountryID = toInteger(CountryID),\n\t\ttelephone = toInteger(telephone),\n\t\tFileName = 'UK_Data_12062021.txt') ~> DerivedColumn1\nAddFilenameColumn sink(input(\n\t\tCountryid as string,\n\t\tCountryName as string,\n\t\tState as string,\n\t\tPincode as string,\n\t\tAddress as string,\n\t\tTelephoneNumber as integer,\n\t\tFileName as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: true,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tCountryid = CountryID,\n\t\tCountryName,\n\t\tState,\n\t\tPincode,\n\t\tAddress,\n\t\tTelephoneNumber = telephone\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sinkforErrorrecords\nDerivedColumn1 sink(input(\n\t\tCountryid as integer,\n\t\tCountryName as string,\n\t\tState as string,\n\t\tPincode as string,\n\t\tAddress as string,\n\t\tTelephoneNumber as integer,\n\t\tFileName as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tCountryid = CountryID,\n\t\tCountryName,\n\t\tState,\n\t\tPincode,\n\t\tAddress,\n\t\tTelephoneNumber = telephone\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sinkforGoodrows"
+		}
+	}
+}
