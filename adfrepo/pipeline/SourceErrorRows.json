@@ -4,6 +4,7 @@
 		"activities": [
 			{
 				"name": "HandlingErrorRows",
+				"description": "This pipline is calling dataflow process and error handiling.",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
